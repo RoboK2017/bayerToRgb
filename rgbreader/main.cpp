@@ -136,7 +136,7 @@ cv::Mat convertImage(const cv::Mat &bayer)
 {
    cv::Mat dst(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC3);
 
-   cv::cvtColor(bayer, dst, CV_BayerGR2BGR);
+   cv::cvtColor(bayer, dst, CV_BayerRG2BGR);
    return dst;
 }
 
