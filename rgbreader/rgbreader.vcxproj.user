@@ -6,4 +6,9 @@
     <LocalDebuggerEnvironment>$(Path) $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <LocalDebuggerCommandArguments>-s -d</LocalDebuggerCommandArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommandArguments>-s</LocalDebuggerCommandArguments>
+    <LocalDebuggerEnvironment>$(Path) $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

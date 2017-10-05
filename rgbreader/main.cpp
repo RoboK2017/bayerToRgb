@@ -82,8 +82,6 @@ int main(int argc, char ** argv) {
 cv::Mat loadRawImage(const char *s)
 {
    cv::Mat img(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC1);
-   CvSize sz = { IMAGE_WIDTH, IMAGE_HEIGHT };
-
    memcpy(img.data, loadRawData(s, sizeof(char) * img.cols * img.rows),
           sizeof(char) * img.cols * img.rows);
 
@@ -99,10 +97,6 @@ cv::Mat loadRawImage(const char *s)
 cv::Mat loadRawImageFromBuffer(const char *buffer)
 {
    cv::Mat img(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC1);
-   CvSize sz = { IMAGE_WIDTH, IMAGE_HEIGHT };
-
-   //img = cvCreateImage(sz, IPL_DEPTH_8U, 1);
-
    memcpy(img.data, buffer, sizeof(unsigned char) * img.cols * img.rows);
 
    if (!img.data) {
