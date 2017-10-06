@@ -15,7 +15,6 @@ namespace {
    const int IMAGE_WIDTH = 752;
    const int IMAGE_HEIGHT = 480;
    const int BUFFERSIZE = 360961;
-   const char * FILENAME = "AC_home";
    const int DELAY_IN_MS = 1;
 }
 
@@ -31,15 +30,22 @@ int main(int argc, char ** argv) {
    cxxopts::Options options("ImageReader", "The programe to convert Bayer format(MT9V034 specifically) to RGB for further processing.");
    options.add_options()
       ("d,debug", "Enable debugging, this will save the raw Bayer file for each frame as well as the converted Jpeg file.")
-      ("s,show", "Show converted Jpeg file for each Bayer file converted.");
+      ("s,show", "Show converted Jpeg file for each Bayer file converted.")
+      ("f,file", "The raw Bayer file to be parsed.", cxxopts::value<std::string>());
    options.parse(argc, argv);
 
    bool debugMode = options.count("debug") > 0;
    bool showImage = options.count("show") > 0;
+   auto rawFileName = options["file"].as<std::string>();
+
+   if (debugMode)
+   {
+      std::cout << "[DEBUG] The rawFileName: " << rawFileName << "\n";
+   }
 
    char buffer[BUFFERSIZE];
 
-   std::ifstream fin(FILENAME, std::ios::in | std::ios::binary);
+   std::ifstream fin(rawFileName.c_str(), std::ios::in | std::ios::binary);
    fin.read(buffer, BUFFERSIZE);
    if (fin.good())
    {
@@ -64,7 +70,7 @@ int main(int argc, char ** argv) {
          ++totalImages;
          showConvertedImage(imgName.c_str() , buffer + 1, debugMode, showImage);
       }
-      std::cout << "Finished reading file " << FILENAME << ". " << totalImages << " files have been created\n";
+      std::cout << "Finished reading file " << rawFileName << ". " << totalImages << " files have been created\n";
       fin.close();
    }
    else {

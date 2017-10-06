@@ -4,10 +4,10 @@
     <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerEnvironment>$(Path) $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
-    <LocalDebuggerCommandArguments>-s -d</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-s -f AC_HOME2</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-s</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-s --file AC_HOME2</LocalDebuggerCommandArguments>
     <LocalDebuggerEnvironment>$(Path) $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
