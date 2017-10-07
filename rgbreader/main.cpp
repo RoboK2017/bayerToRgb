@@ -182,7 +182,9 @@ void showConvertedImage(const char * fileName, const char * data, bool debugMode
          cv::imshow("convertedJpeg", rgb);
          cv::waitKey(DELAY_IN_MS);
       }
-      saveImage(rgb, std::string(std::string(fileName) + ".jpeg").c_str());
+      if (debugMode) {
+         saveImage(rgb, std::string(std::string(fileName) + ".jpeg").c_str());
+      }
    }
 
    bayer.release();
