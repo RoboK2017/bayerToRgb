@@ -3,3 +3,10 @@ data2
 AC_HOME
 .vs
 ***.log
+***.tlog
+***.pdb
+***.obj
+***.exe
+***.iobj
+***.ipdb
+***.ilk
