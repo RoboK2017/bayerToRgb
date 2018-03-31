@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <unordered_map>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -53,7 +54,7 @@ int main(int argc, char ** argv) {
    if (fin.good())
    {
       unsigned int totalImages = 0;
-      unsigned int patchNum = 0;
+      std::unordered_map<int, int> seq2CountUMap;
       while (fin.read(buffer, BUFFERSIZE)) {
          std::streamsize s = fin.gcount();
          if (s != BUFFERSIZE) {
@@ -63,10 +64,12 @@ int main(int argc, char ** argv) {
             std::getchar();
          }
          uchar sequenceNum = buffer[0];
+         int SeqCount = seq2CountUMap[(int)sequenceNum]++;
          std::string imgName = (hasMultipleChannel ? 
-                                 "img_" + std::to_string(sequenceNum) + "_" + std::to_string(patchNum) :
-                                 "img_" + std::to_string(sequenceNum));
+                                 "img_s" + std::to_string(sequenceNum) + "_p" + std::to_string(SeqCount) :
+                                 "img_s" + std::to_string(sequenceNum));
          std::cout << "Read image: " << imgName << '\n';
+         
          if (debugMode) {
             std::ofstream outfile(imgName, std::ios::out | std::ios::binary);
             std::cout << "[DEBUG] Writing image: " << imgName << '\n';
@@ -74,10 +77,7 @@ int main(int argc, char ** argv) {
             outfile.close();
          }
          ++totalImages;
-         if (hasMultipleChannel && (totalImages % patchSize == 0)) 
-         { 
-            if (++patchNum == patchSize) { patchNum = 0; }
-         }
+
          showConvertedImage(imgName.c_str() , buffer + 1, debugMode, showImage);
       }
       std::cout << "Finished reading file " << rawFileName << ". " << totalImages << " files have been created\n";
