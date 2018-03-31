@@ -7,7 +7,7 @@
     <LocalDebuggerCommandArguments>-s -f AC_HOME2</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-s --file AC_HOME2</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-f data -s -d -p 4</LocalDebuggerCommandArguments>
     <LocalDebuggerEnvironment>$(Path) $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
