@@ -50,7 +50,6 @@ int main(int argc, char ** argv) {
    char buffer[BUFFERSIZE];
 
    std::ifstream fin(rawFileName.c_str(), std::ios::in | std::ios::binary);
-   fin.read(buffer, BUFFERSIZE);
    if (fin.good())
    {
       unsigned int totalImages = 0;
