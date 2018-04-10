@@ -53,6 +53,10 @@ int main(int argc, char ** argv) {
    if (fin.good())
    {
       unsigned int totalImages = 0;
+      const unsigned short SequenceMax = 255;
+      const unsigned short SequenceStride = 256;
+      unsigned int sequenceMultiple = 0;
+      unsigned int prevSequenceNum = 0;
       std::unordered_map<int, int> seq2CountUMap;
       while (fin.read(buffer, BUFFERSIZE)) {
          std::streamsize s = fin.gcount();
@@ -63,10 +67,13 @@ int main(int argc, char ** argv) {
             std::getchar();
          }
          uchar sequenceNum = buffer[0];
-         int SeqCount = seq2CountUMap[(int)sequenceNum]++;
+         if (prevSequenceNum == SequenceMax && sequenceNum == 0)
+            ++sequenceMultiple;
+         unsigned int finalSequenceNum = (int)sequenceNum + SequenceStride * sequenceMultiple;
+         int SeqCount = seq2CountUMap[finalSequenceNum]++;
          std::string imgName = (hasMultipleChannel ? 
-                                 "img_s" + std::to_string(sequenceNum) + "_p" + std::to_string(SeqCount) :
-                                 "img_s" + std::to_string(sequenceNum));
+                                 "img_s" + std::to_string(finalSequenceNum) + "_p" + std::to_string(SeqCount) :
+                                 "img_s" + std::to_string(finalSequenceNum));
          std::cout << "Read image: " << imgName << '\n';
          
          if (debugMode) {
@@ -76,8 +83,8 @@ int main(int argc, char ** argv) {
             outfile.close();
          }
          ++totalImages;
-
          showConvertedImage(imgName.c_str() , buffer + 1, debugMode, showImage);
+         prevSequenceNum = sequenceNum;
       }
       std::cout << "Finished reading file " << rawFileName << ". " << totalImages << " files have been created\n";
       fin.close();
